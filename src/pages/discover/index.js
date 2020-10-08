@@ -1,6 +1,5 @@
 import React, { memo, useEffect } from 'react'
 
-import request from "@/services/request"
 
 import { discoverMenu } from "@/common/local-data";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
@@ -13,14 +12,6 @@ import {
 
 export default memo(function ZCDiscover(props) {
   const { route } = props
-
-  useEffect(() => {
-    request({
-      url: "/banner",
-    }).then(res=>{
-      console.log(res);
-    })
-  }, [])
   
   return (
     <DiscoverWrapper>
