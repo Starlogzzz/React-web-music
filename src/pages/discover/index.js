@@ -1,14 +1,27 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
+
+import request from "@/services/request"
 
 import { discoverMenu } from "@/common/local-data";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { renderRoutes } from 'react-router-config';
 
 import { 
   DiscoverWrapper,
   TopMenu 
 } from './style';
 
-export default memo(function ZCDiscover() {
+export default memo(function ZCDiscover(props) {
+  const { route } = props
+
+  useEffect(() => {
+    request({
+      url: "/banner",
+    }).then(res=>{
+      console.log(res);
+    })
+  }, [])
+  
   return (
     <DiscoverWrapper>
         <TopMenu className="wrap-v1">
@@ -20,6 +33,7 @@ export default memo(function ZCDiscover() {
             })
           }
         </TopMenu>
+        {renderRoutes(route.routes)}
     </DiscoverWrapper>
   )
 })

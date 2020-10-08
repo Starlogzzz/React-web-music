@@ -16,7 +16,7 @@ export const TopMenu = styled.div`
     margin: 7px 17px 0;
     border-radius: 20px;
     line-height: 21px;
-    &:hover, a.active {
+    &:hover, &.active {
       text-decoration: none;
       background: #9B0909;
     }
