@@ -11,7 +11,7 @@ export default memo(function App() {
   return (
     <HashRouter>
       <ZCAppHeader/>
-      {renderRoutes(routes)}
+        {renderRoutes(routes)}
       <ZCAppFooter/>
     </HashRouter>
   )
