@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 
 
 import { discoverMenu } from "@/common/local-data";

@@ -1,29 +1,40 @@
-import React, { memo, useEffect } from 'react'
-import { connect } from "react-redux";
+import React, { memo } from 'react'
 
-import { getTopBannerAction } from "./store/actionCreators"
+import ZCTopBanner from "./c-cpns/top-banner"
+import { RecommendWrapper } from './style';
 function ZCRecommend(props) {
-  const { getBanners, topBanners } = props;
-
-  useEffect(() => {
-    getBanners();
-  }, [getBanners])
-  
   return (
-    <div>
-      <h2>ZCRecommend:{topBanners.length}</h2>
-    </div>
+    <RecommendWrapper>
+      <ZCTopBanner></ZCTopBanner>
+    </RecommendWrapper>
   )
 }
 
-const mapStateToProps = state => ({
-  topBanners: state.recommend.topBanners
-});
+export default memo(ZCRecommend)
 
-const mapDispatchToProps = dispatch => ({
-  getBanners: () => {
-    dispatch(getTopBannerAction())
-  }
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(memo(ZCRecommend))
+// function ZCRecommend(props) {
+//   const { getBanners, topBanners } = props;
+
+//   useEffect(() => {
+//     getBanners();
+//   }, [getBanners])
+  
+//   return (
+//     <div>
+//       <h2>ZCRecommend:{topBanners.length}</h2>
+//     </div>
+//   )
+// }
+
+// const mapStateToProps = state => ({
+//   topBanners: state.recommend.topBanners
+// });
+
+// const mapDispatchToProps = dispatch => ({
+//   getBanners: () => {
+//     dispatch(getTopBannerAction())
+//   }
+// })
+
+// export default connect(mapStateToProps, mapDispatchToProps)(memo(ZCRecommend))

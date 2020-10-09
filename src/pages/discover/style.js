@@ -7,7 +7,7 @@ export const DiscoverWrapper = styled.div`
 export const TopMenu = styled.div`
   position: relative;
   padding-left: 180px;
-  top: -4px;
+  top: -5px;
   a {
     display: inline-block;
     height: 20px;
