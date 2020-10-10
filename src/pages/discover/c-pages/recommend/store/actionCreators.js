@@ -1,10 +1,18 @@
 import * as actionTypes from "./constants";
 
-import { getTopBanners } from '@/services/recommend';
+import { 
+  getTopBanners,
+  getHotRecommends 
+} from '@/services/recommend';
 
 const changeTopBannerAction = res => ({
   type: actionTypes.CHANGE_TOP_BANNERS,
   topBanners: res.banners
+})
+
+const changeHotRecommendAction = res => ({
+  type: actionTypes.CHANGE_HOT_RECOMMENDS,
+  hotRecommends: res.result
 })
 
 // 传入函数返回一个函数：因为可能在这里需要一些参数做一些事情
@@ -13,6 +21,14 @@ export const getTopBannerAction = () => {
     // 发送网络请求，在servers中定义网络请求
     getTopBanners().then(res => {
       dispatch(changeTopBannerAction(res))
+    })
+  }
+}
+
+export const getHotRecommendAction = (limit) => {
+  return dispatch => {
+    getHotRecommends(limit).then(res => {
+      dispatch(changeHotRecommendAction(res))
     })
   }
 }

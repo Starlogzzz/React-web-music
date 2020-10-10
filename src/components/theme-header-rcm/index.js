@@ -2,8 +2,9 @@ import React, { memo } from 'react'
 import PropTypes from "prop-types"
 
 import { HeaderWrapper } from "./style"
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 const ZCThemeHeaderRCM =  memo(function(props) {
-  const { title, keywords } = props;
+  const { title, keywords, path } = props;
   return (
     <HeaderWrapper className="sprite_02">
       <div className="left">
@@ -22,7 +23,7 @@ const ZCThemeHeaderRCM =  memo(function(props) {
         </div>
       </div>
       <div className="right">
-        <a href="todo">更多</a>
+        <NavLink to={path}>更多</NavLink>
         <i className={"icon sprite_02"}></i>
       </div>
     </HeaderWrapper>
@@ -31,11 +32,14 @@ const ZCThemeHeaderRCM =  memo(function(props) {
 
 ZCThemeHeaderRCM.propTypes = {
   title: PropTypes.string.isRequired,
-  keywords: PropTypes.array
+  keywords: PropTypes.array,
+  path: PropTypes.string.isRequired
 }
 
 ZCThemeHeaderRCM.defaultProps = {
   keywords: []
 }
+
+
 
 export default ZCThemeHeaderRCM

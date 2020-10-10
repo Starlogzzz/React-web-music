@@ -2,6 +2,8 @@ import React, { memo } from 'react'
 
 import ZCTopBanner from "./c-cpns/top-banner"
 import ZCHotRecommend from "./c-cpns/hot-recommend"
+import ZCNewAlbum from "./c-cpns/new-album"
+import ZCRecommendRanking from "./c-cpns/recommend-ranking"
 
 import { 
   RecommendWrapper,
@@ -16,6 +18,8 @@ function ZCRecommend(props) {
       <Content className="wrap-v2">
         <RecommendLeft>
           <ZCHotRecommend/>
+          <ZCNewAlbum/>
+          <ZCRecommendRanking/>
         </RecommendLeft>
         <RecommendRight></RecommendRight>
       </Content>
