@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 
 import ZCTopBanner from "./c-cpns/top-banner"
 import ZCHotRecommend from "./c-cpns/hot-recommend"
-import ZCThemeHeaderRCM from "@/components/theme-header-rcm"
+
 import { 
   RecommendWrapper,
   Content,
@@ -15,9 +15,7 @@ function ZCRecommend(props) {
       <ZCTopBanner/>
       <Content className="wrap-v2">
         <RecommendLeft>
-          <ZCHotRecommend>
-            <ZCThemeHeaderRCM/>
-          </ZCHotRecommend>
+          <ZCHotRecommend/>
         </RecommendLeft>
         <RecommendRight></RecommendRight>
       </Content>
