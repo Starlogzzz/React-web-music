@@ -1,11 +1,33 @@
 import React, { memo } from 'react'
 
 import ZCTopBanner from "./c-cpns/top-banner"
-import { RecommendWrapper } from './style';
+import ZCHotRecommend from "./c-cpns/hot-recommend"
+import ZCThemeHeaderRCM from "@/components/theme-header-rcm"
+import { 
+  RecommendWrapper,
+  Content,
+  RecommendLeft,
+  RecommendRight 
+} from './style';
 function ZCRecommend(props) {
   return (
     <RecommendWrapper>
-      <ZCTopBanner></ZCTopBanner>
+      <ZCTopBanner/>
+      <Content className="wrap-v2">
+        <RecommendLeft>
+          <ZCHotRecommend>
+            <ZCThemeHeaderRCM/>
+          </ZCHotRecommend>
+        </RecommendLeft>
+        <RecommendRight></RecommendRight>
+      </Content>
+      {/* <h2>11111</h2>
+      <h2>111111111</h2>
+      <h2>111111111</h2>
+      <h2>111111111</h2>
+      <h2>111111111</h2>
+      <h2>111111111</h2>
+      <h2>111111111</h2> */}
     </RecommendWrapper>
   )
 }
