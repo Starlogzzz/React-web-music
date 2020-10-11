@@ -6,6 +6,7 @@ import { getNewAlbumAction } from '../../store/actionCreators';
 import { shallowEqual } from 'react-redux';
 
 import { Carousel } from 'antd';
+import ZCAlbumCover from "@/components/album-cover"
 import { NewAlbumWrapper } from './style';
 import ZCThemeHeaderRCM from '@/components/theme-header-rcm';
 
@@ -36,7 +37,12 @@ export default memo(function ZCNewAlbum() {
                   <div key={item} className="page">
                     {
                       newAlbums.slice(item * 5, (item + 1) * 5).map(iten => {
-                        return <div>{iten.name}</div>
+                        return <ZCAlbumCover key={iten.id}
+                                             info={iten} 
+                                             size={100} 
+                                             width={118} 
+                                             bgp="-570px" />
+                                               
                       })
                     }
                   </div>
