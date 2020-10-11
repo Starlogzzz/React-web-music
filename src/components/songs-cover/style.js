@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const SongsCoverWrapper = styled.div`
   width: 140px;
   height: 204px;
-  /* margin: 20px ${props => (props.right || 0)} 20px 0; */
-  margin-bottom: 30px;
+  margin: 20px ${props => (props.right || 0)} 20px 0;
   .cover-top {
     position: relative;
     width: 140px;
@@ -26,24 +25,30 @@ export const SongsCoverWrapper = styled.div`
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 27px;
-      background-position: 0 -537px;
+      height: 100%;
+      background-position: 0 0;
       color: #ccc;
       .info {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-position: 0 -537px;
+        color: #ccc;
+        height: 27px;
         .info_left {
           .nb {
             display: inline-block;
-            position: absolute;
-            top: 5px;
           }
           .erji {
             display: inline-block;
             width: 14px;
             height: 11px;
-            margin: 9px 5px 9px 10px;
+            margin-right: 5px;
             background-position: 0 -24px;
           }
         }
