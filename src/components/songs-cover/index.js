@@ -21,7 +21,7 @@ export default memo(function ZCSongsCover(props) {
               <i className="sprite_icon erji"></i>
               <span className="nb">{getCount(info.playCount)}</span>
             </span>
-            <a className="sprite_icon play"></a>
+            <i className="sprite_icon play"></i>
           </div>
         </div>
       </div>
