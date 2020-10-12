@@ -1,0 +1,1 @@
+export const HOT_NEW_ALBUMS = "album/hot_new_albums";
