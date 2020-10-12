@@ -3,7 +3,8 @@ import * as actionTypes from "./constants";
 import { 
   getTopBanners,
   getHotRecommends,
-  getNewAlbums 
+  getNewAlbums,
+  getTopList
 } from '@/services/recommend';
 
 const changeTopBannerAction = res => ({
@@ -19,6 +20,20 @@ const changeHotRecommendAction = res => ({
 const changeNewAlbumAction = res => ({
   type: actionTypes.CHANGE_NEW_ALBUMS,
   newAlbums: res.monthData
+})
+
+// 不同排行榜的action
+const changeUpRankingListAction = res => ({
+  type: actionTypes.CHANGE_UP_RANKING_LIST,
+  upRankingList: res.playlist
+})
+const changeNewRankingListAction = res => ({
+  type: actionTypes.CHANGE_NEW_RANKING_LIST,
+  newRankingList: res.playlist
+})
+const changeOriginRankingListAction = res => ({
+  type: actionTypes.CHANGE_ORIGIN_RANKING_LIST,
+  originRankingList: res.playlist
 })
 
 // 传入函数返回一个函数：因为可能在这里需要一些参数做一些事情
@@ -42,9 +57,25 @@ export const getHotRecommendAction = (limit) => {
 export const getNewAlbumAction = (limit) => {
   return dispatch => {
     getNewAlbums(limit).then(res => {
+      dispatch(changeNewAlbumAction(res))
+    })
+  }
+}
+
+export const getTopListAction = (id) => {
+  return dispatch => {
+    getTopList(id).then(res => {
       console.log(res);
       
-      dispatch(changeNewAlbumAction(res))
+      switch(id) {
+        case 19723756:
+          return dispatch(changeUpRankingListAction(res))
+        case 3779629:
+          return dispatch(changeNewRankingListAction(res))
+        case 2884035:
+          return dispatch(changeOriginRankingListAction(res))
+        default:
+      }
     })
   }
 }
