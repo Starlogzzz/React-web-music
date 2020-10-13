@@ -47,8 +47,8 @@ export const Control = styled.div`
   }
 `
 export const PlayInfo = styled.div`
-  display: flex;
   width: 642px;
+  display: flex;
   align-items: center;
 
   .image {
@@ -59,6 +59,7 @@ export const PlayInfo = styled.div`
 
   .info {
     width: 608px;
+    margin-left: 10px;
     .song {
       position: relative;
       top: 8px;
@@ -117,6 +118,7 @@ export const Operator = styled.div`
   display: flex;
   position: relative;
   top: 5px;
+  margin-left: 20px;
 
   .btn {
     width: 25px;

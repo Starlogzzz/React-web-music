@@ -12,7 +12,6 @@ export default memo(function ZCAlbum() {
     hotNewAblums: state.getIn(["album", "hotNewAblums"])
   }), shallowEqual)
 
-  console.log(hotNewAblums)
   const dispatch = useDispatch();
 
   useEffect(() =>{

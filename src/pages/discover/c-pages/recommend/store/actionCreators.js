@@ -72,8 +72,7 @@ export const getNewAlbumAction = (limit) => {
 export const getTopListAction = (id) => {
   return dispatch => {
     getTopList(id).then(res => {
-      console.log(res);
-      
+ 
       switch(id) {
         case 19723756:
           return dispatch(changeUpRankingListAction(res))
@@ -90,7 +89,6 @@ export const getTopListAction = (id) => {
 export const getSettleSingers = () => {
   return dispath => {
     getArtistList(5, -1).then(res => {
-      console.log(res)
       dispath(changeSettleSingsAction(res))
     })
   }

@@ -17,8 +17,7 @@ export default memo(function ZCNewAlbum() {
   const { newAlbums } = useSelector(state => ({
     newAlbums: state.getIn(["recommend", "newAlbums"])
   }), shallowEqual);
-  console.log(newAlbums);
-  
+
   useEffect(() => {
     dispatch(getNewAlbumAction(10))
   }, [dispatch]);
