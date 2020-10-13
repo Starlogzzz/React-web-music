@@ -5,6 +5,8 @@ import ZCHotRecommend from "./c-cpns/hot-recommend"
 import ZCNewAlbum from "./c-cpns/new-album"
 import ZCRecommendRanking from "./c-cpns/recommend-ranking"
 import ZCUseLogin from "./c-cpns/user-login"
+import ZCSettleSinger from "./c-cpns/settle-singer"
+import ZCHotRadio from "./c-cpns/hot-radio"
 
 import { 
   RecommendWrapper,
@@ -24,6 +26,8 @@ function ZCRecommend(props) {
         </RecommendLeft>
         <RecommendRight>
           <ZCUseLogin/>
+          <ZCSettleSinger/>
+          <ZCHotRadio/>
         </RecommendRight>
       </Content>
     </RecommendWrapper>

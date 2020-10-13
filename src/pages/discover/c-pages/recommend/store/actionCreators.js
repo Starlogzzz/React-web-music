@@ -4,7 +4,8 @@ import {
   getTopBanners,
   getHotRecommends,
   getNewAlbums,
-  getTopList
+  getTopList,
+  getArtistList
 } from '@/services/recommend';
 
 const changeTopBannerAction = res => ({
@@ -34,6 +35,12 @@ const changeNewRankingListAction = res => ({
 const changeOriginRankingListAction = res => ({
   type: actionTypes.CHANGE_ORIGIN_RANKING_LIST,
   originRankingList: res.playlist
+})
+
+// 入驻歌手
+const changeSettleSingsAction = res => ({
+  type: actionTypes.CHANGE_SETTLE_SONGER,
+  settleSings: res.artists
 })
 
 // 传入函数返回一个函数：因为可能在这里需要一些参数做一些事情
@@ -76,6 +83,15 @@ export const getTopListAction = (id) => {
           return dispatch(changeOriginRankingListAction(res))
         default:
       }
+    })
+  }
+}
+
+export const getSettleSingers = () => {
+  return dispath => {
+    getArtistList(5, -1).then(res => {
+      console.log(res)
+      dispath(changeSettleSingsAction(res))
     })
   }
 }

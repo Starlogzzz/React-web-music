@@ -8,7 +8,9 @@ const defaultState = Map({
 
   upRankingList: {},
   newRankingList: {},
-  originRankingList: {}
+  originRankingList: {},
+
+  settleSings: []
 });
 
 function reducer(state = defaultState, action) {
@@ -26,6 +28,8 @@ function reducer(state = defaultState, action) {
       return state.set("newRankingList", action.newRankingList)
     case actionType.CHANGE_ORIGIN_RANKING_LIST:
       return state.set("originRankingList", action.originRankingList)
+    case actionType.CHANGE_SETTLE_SONGER:
+      return state.set("settleSings", action.settleSings)
     default:
       return state
   }

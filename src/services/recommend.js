@@ -32,3 +32,13 @@ export function getTopList(id) {
     }
   })
 }
+
+export function getArtistList(limit, type) {
+  return request({
+    url: "/artist/list",
+    params: {
+      type,
+      limit
+    }
+  })
+}
