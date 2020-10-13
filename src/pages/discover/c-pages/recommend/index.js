@@ -4,6 +4,7 @@ import ZCTopBanner from "./c-cpns/top-banner"
 import ZCHotRecommend from "./c-cpns/hot-recommend"
 import ZCNewAlbum from "./c-cpns/new-album"
 import ZCRecommendRanking from "./c-cpns/recommend-ranking"
+import ZCUseLogin from "./c-cpns/user-login"
 
 import { 
   RecommendWrapper,
@@ -21,15 +22,10 @@ function ZCRecommend(props) {
           <ZCNewAlbum/>
           <ZCRecommendRanking/>
         </RecommendLeft>
-        <RecommendRight></RecommendRight>
+        <RecommendRight>
+          <ZCUseLogin/>
+        </RecommendRight>
       </Content>
-      {/* <h2>11111</h2>
-      <h2>111111111</h2>
-      <h2>111111111</h2>
-      <h2>111111111</h2>
-      <h2>111111111</h2>
-      <h2>111111111</h2>
-      <h2>111111111</h2> */}
     </RecommendWrapper>
   )
 }
