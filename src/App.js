@@ -8,6 +8,7 @@ import store from './store/index';
 
 import ZCAppHeader from "@/components/app-header"
 import ZCAppFooter from "@/components/app-footer"
+import ZCAppPlayBar from "@/pages/player/app-play-bar"
 
 export default memo(function App() {
   return (
@@ -16,6 +17,7 @@ export default memo(function App() {
         <ZCAppHeader/>
           {renderRoutes(routes)}
         <ZCAppFooter/>
+        <ZCAppPlayBar/>
       </HashRouter>
     </Provider>
   )
