@@ -1,11 +1,20 @@
 import React, { memo } from 'react'
 
+import { getSongDetailAction } from "@/pages/player/store";
+
 import { TopRankingWrapper } from "./style"
 import { getSizeImage } from '@/utils/format-utils';
+import { useDispatch } from 'react-redux';
 
 export default memo(function ZCTopRanking(props) {
+  const dispatch = useDispatch();
+
   const { info } = props;
   const { tracks = [] } = info;
+
+  const playMusic = (item) => {
+    dispatch(getSongDetailAction(item.id))
+  }
   return (
     <TopRankingWrapper>
       <div className="header">
@@ -30,7 +39,7 @@ export default memo(function ZCTopRanking(props) {
                 <div className="info">
                   <a className="name text-nowrap" href="/todo">{item.name}</a>
                   <div className="operate">
-                    <button className="btn sprite_02 play"></button>
+                    <button className="btn sprite_02 play" onClick={e => playMusic(item)}></button>
                     <button className="btn sprite_icon2 addto"></button>
                     <button className="btn sprite_02 favor"></button>
                   </div>

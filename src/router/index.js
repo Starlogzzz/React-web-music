@@ -7,6 +7,7 @@ import ZCSongs from "@/pages/discover/c-pages/songs"
 import ZCDjradio from "@/pages/discover/c-pages/djradio"
 import ZCArtist from "@/pages/discover/c-pages/artist"
 import ZCAlbum from "@/pages/discover/c-pages/album"
+import ZCPlayer from "@/pages/player"
 
 import ZCMine from "@/pages/mine"
 import ZCFriend from "@/pages/friend"
@@ -47,6 +48,10 @@ const routes = [
       {
         path: "/discover/album",
         component: ZCAlbum
+      },
+      {
+        path: "/discover/player",
+        component: ZCPlayer
       },
     ]
   },

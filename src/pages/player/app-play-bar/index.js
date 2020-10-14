@@ -2,6 +2,7 @@ import React, { memo, useState, useEffect, useRef, useCallback } from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { shallowEqual } from 'react-redux';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 import { getSizeImage, formatDate, getPlaySong } from '@/utils/format-utils';
@@ -40,10 +41,10 @@ export default memo(function ZCAppPlayBar() {
   const showDuration = formatDate(duration, "mm:ss")
   const showCurrentTime = formatDate(audioTime, "mm:ss")
 
-  const playRadio = () => {
+  const playRadio = useCallback(() => {
     isPlaying ? radioRef.current.pause() : radioRef.current.play();
     setIsPlaying(!isPlaying)
-  }
+  }, [isPlaying])
   const timeUpDate = (e) => {
     if(!isChange) {
       setAudioTime(e.target.currentTime * 1000);
@@ -65,7 +66,7 @@ export default memo(function ZCAppPlayBar() {
     if(!isPlaying) {
       playRadio();
     }
-  }, [duration])
+  }, [duration, isPlaying, playRadio])
 
   return (
     <AppPlayerBarWrapper className="sprite_playbar">
@@ -77,9 +78,9 @@ export default memo(function ZCAppPlayBar() {
         </Control>
         <PlayInfo>
           <div className="image">
-            <a href="/#">
+            <NavLink to="/discover/player">
               <img src={getSizeImage(picUrl, 34)} alt="" />
-            </a>
+            </NavLink>
           </div>
           <div className="info">
             <div className="song">
