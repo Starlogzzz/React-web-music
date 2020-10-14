@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useRef } from 'react'
+import React, { memo, useState, useEffect, useRef, useCallback } from 'react'
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { shallowEqual } from 'react-redux';
@@ -17,6 +17,9 @@ import {
 
 export default memo(function ZCAppPlayBar() {
   const [audioTime, setAudioTime] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const [isChange, setIsChange] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const { currentSong } = useSelector(state => ({
     currentSong: state.getIn(["player", "currentSong"])
@@ -25,27 +28,49 @@ export default memo(function ZCAppPlayBar() {
   const radioRef = useRef();
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getSongDetailAction(1472480890))
+    dispatch(getSongDetailAction(1436709403))
   }, [dispatch])
+  useEffect(() => {
+    radioRef.current.src = getPlaySong(currentSong.id);
+  }, [currentSong])
 
   const picUrl = (currentSong.al && currentSong.al.picUrl) || ""
   const singerName = (currentSong.ar && currentSong.ar[0].name) || ""
   const duration = (currentSong && currentSong.dt) || ""
   const showDuration = formatDate(duration, "mm:ss")
   const showCurrentTime = formatDate(audioTime, "mm:ss")
-  const progress = (audioTime / duration) * 100; 
 
   const playRadio = () => {
-    radioRef.current.src = getPlaySong(currentSong.id);
-    radioRef.current.play();
+    isPlaying ? radioRef.current.pause() : radioRef.current.play();
+    setIsPlaying(!isPlaying)
   }
   const timeUpDate = (e) => {
-    setAudioTime(e.target.currentTime * 1000);
+    if(!isChange) {
+      setAudioTime(e.target.currentTime * 1000);
+      setProgress((audioTime / duration) * 100);
+    }
   }
+  const progressChange = useCallback((value) => {
+    const currentTime = value / 100 * duration;
+    setAudioTime(currentTime);
+    setIsChange(true);
+    setProgress(value);
+  }, [duration])
+  const progressChangeOver = useCallback((value) => {
+    const currentTime = value / 100 * duration / 1000;
+    radioRef.current.currentTime = currentTime;
+    setAudioTime(currentTime * 1000)
+    setIsChange(false);
+
+    if(!isPlaying) {
+      playRadio();
+    }
+  }, [duration])
+
   return (
     <AppPlayerBarWrapper className="sprite_playbar">
       <div className="content wrap-v2">
-        <Control>
+        <Control isPlaying={isPlaying}>
           <button className="sprite_playbar prev"></button>
           <button className="sprite_playbar play" onClick={e => playRadio()}></button>
           <button className="sprite_playbar next"></button>
@@ -62,7 +87,10 @@ export default memo(function ZCAppPlayBar() {
               <a href="#/" className="singer-name">{singerName}</a>
             </div>
             <div className="progress">
-              <Slider defaultValue={30} value={progress}/>
+              <Slider defaultValue={30}
+                      value={progress}
+                      onChange={progressChange}
+                      onAfterChange={progressChangeOver}/>
               <div className="time">
                 <span className="now-time">{showCurrentTime}</span>
                 <span className="divider">/</span>
