@@ -80,7 +80,8 @@ export default memo(function ZCAppPlayBar() {
   }
   const handleMusicEnded = () => {
     if (sequence === 2) {
- 
+      radioRef.current.currentTime = 0;
+      radioRef.current.play();
     } else {
       dispatch(changeCurrentSong(1))
     }

@@ -8,3 +8,12 @@ export function getSongDetail(ids) {
     }
   })
 }
+
+export function getSongLyric(id) {
+  return request({
+    url: "/lyric",
+    params: {
+      id
+    }
+  })
+}

@@ -1,6 +1,7 @@
-import { getSongDetail } from "@/services/player"
+import { getSongDetail, getSongLyric } from "@/services/player"
 
 import { getRandomNumber } from "@/utils/math-utils"
+import { parseLyric } from "@/utils/parse-lyric";
 
 import * as actionTypes from "./constants"
 
@@ -17,6 +18,11 @@ const changePlayListAction = playList => ({
 const changeCurrentSongIndexAction = index => ({
   type: actionTypes.CHANGE_CURRENT_SONG_INDEX,
   index
+})
+
+const changeLyricList = lyricList => ({
+  type: actionTypes.CHANGE_LYRIC_LIST,
+  lyricList
 })
 
 export const changeSequenceAction = sequence => ({
@@ -47,6 +53,9 @@ export const changeCurrentSong = (tag) => {
     const currentSong = playList[currentSongIndex];
     dispatch(changeSongDetailAction(currentSong));
     dispatch(changeCurrentSongIndexAction(currentSongIndex))
+
+    // 请求歌词
+    dispatch(getLyricAction(currentSong.id))
   }
 }
 
@@ -56,17 +65,18 @@ export const getSongDetailAction = (ids) => {
     const playList = getState().getIn(["player", "playList"])
     const songIndex = playList.findIndex(song => song.id === ids)
 
+    let song = null;
     // 2.判断是否找到了歌曲
     if(songIndex !== -1) { // 找到了歌曲
       dispatch(changeCurrentSongIndexAction(songIndex));
-      const song = playList[songIndex];
+      song = playList[songIndex];
       dispatch(changeSongDetailAction(song))
+      dispatch(getLyricAction(song.id));
     } else { // 没找到歌曲
       // 1.请求歌曲数据
       getSongDetail(ids).then(res => {
-        const song = res.songs && res.songs[0];
+        song = res.songs && res.songs[0];
         if(!song) return;
-
         // 2.将歌曲添加到列表中
         const newPlayList = [...playList];
         newPlayList.push(song);
@@ -75,7 +85,20 @@ export const getSongDetailAction = (ids) => {
         dispatch(changePlayListAction(newPlayList));
         dispatch(changeCurrentSongIndexAction(newPlayList.length - 1));
         dispatch(changeSongDetailAction(song));
+
+        // 4.请求歌词
+        dispatch(getLyricAction(song.id));
       })
     }
+  }
+}
+
+export const getLyricAction = (id) => {
+  return dispatch => {
+    getSongLyric(id).then(res => {
+      const lyric = res.lrc.lyric
+      const lyricList = parseLyric(lyric)
+      dispatch(changeLyricList(lyricList))
+    })
   }
 }

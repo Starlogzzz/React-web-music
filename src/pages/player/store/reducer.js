@@ -208,7 +208,8 @@ const defaultState = Map({
   ],
   currentSongIndex: 0,
   currentSong: {},
-  sequence: 0 // 0：顺序，1：随机，2：单曲
+  sequence: 0, // 0：顺序，1：随机，2：单曲
+  lyricList: []
 });
 
 function reducer(state = defaultState, action) {
@@ -221,6 +222,8 @@ function reducer(state = defaultState, action) {
       return state.set("currentSongIndex", action.index)
     case actionTypes.CHANGE_SEQUENCE:
       return state.set("sequence", action.sequence)
+    case actionTypes.CHANGE_LYRIC_LIST:
+      return state.set("lyricList", action.lyricList)
     default:
       return state
   }
