@@ -1,5 +1,7 @@
 import { getSongDetail } from "@/services/player"
 
+import { getRandomNumber } from "@/utils/math-utils"
+
 import * as actionTypes from "./constants"
 
 const changeSongDetailAction = currentSong => ({
@@ -16,6 +18,37 @@ const changeCurrentSongIndexAction = index => ({
   type: actionTypes.CHANGE_CURRENT_SONG_INDEX,
   index
 })
+
+export const changeSequenceAction = sequence => ({
+  type: actionTypes.CHANGE_SEQUENCE,
+  sequence
+})
+
+export const changeCurrentSong = (tag) => {
+  return (dispatch, getState) => {
+    const playList = getState().getIn(["player", "playList"])
+    let currentSongIndex = getState().getIn(["player", "currentSongIndex"])
+    const sequence = getState().getIn(["player", "sequence"])
+
+    switch(sequence) {
+      case 1: // 随机播放
+        let randomIndex = getRandomNumber(playList.length);
+        while (currentSongIndex == randomIndex) {
+          randomIndex = getRandomNumber(playList.length);
+        }
+        currentSongIndex = randomIndex;
+        break;
+      default: // 顺序播放
+        currentSongIndex += tag;
+        if (currentSongIndex >= playList.length) currentSongIndex = 0;
+        if (currentSongIndex < 0) currentSongIndex = playList.length - 1;
+    }
+
+    const currentSong = playList[currentSongIndex];
+    dispatch(changeSongDetailAction(currentSong));
+    dispatch(changeCurrentSongIndexAction(currentSongIndex))
+  }
+}
 
 export const getSongDetailAction = (ids) => {
   return (dispatch, getState) => {

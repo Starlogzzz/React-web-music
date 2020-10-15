@@ -6,7 +6,11 @@ import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 import { getSizeImage, formatDate, getPlaySong } from '@/utils/format-utils';
-import { getSongDetailAction } from "../store/actionCreators"
+import { 
+  getSongDetailAction,
+  changeSequenceAction,
+  changeCurrentSong
+} from "../store/actionCreators"
 import { Slider } from 'antd';
 
 import {
@@ -17,13 +21,16 @@ import {
 } from "./style"
 
 export default memo(function ZCAppPlayBar() {
-  const [audioTime, setAudioTime] = useState(0)
-  const [progress, setProgress] = useState(0)
-  const [isChange, setIsChange] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [audioTime, setAudioTime] = useState(0) // 当前播放的歌曲
+  const [progress, setProgress] = useState(0) // 播放进度
+  const [isChange, setIsChange] = useState(false) // 是否正在拖动进度条
+  const [isPlaying, setIsPlaying] = useState(false) // 是否正在播放
 
-  const { currentSong } = useSelector(state => ({
-    currentSong: state.getIn(["player", "currentSong"])
+  // hooks
+  const { currentSong, sequence, playList } = useSelector(state => ({
+    currentSong: state.getIn(["player", "currentSong"]),
+    sequence: state.getIn(["player", "sequence"]),
+    playList: state.getIn(["player", "playList"])
   }), shallowEqual)
 
   const radioRef = useRef();
@@ -35,12 +42,26 @@ export default memo(function ZCAppPlayBar() {
     radioRef.current.src = getPlaySong(currentSong.id);
   }, [currentSong])
 
+  // 防止取值取到undefined
   const picUrl = (currentSong.al && currentSong.al.picUrl) || ""
   const singerName = (currentSong.ar && currentSong.ar[0].name) || ""
   const duration = (currentSong && currentSong.dt) || ""
   const showDuration = formatDate(duration, "mm:ss")
   const showCurrentTime = formatDate(audioTime, "mm:ss")
 
+  // 播放形式的切换:顺序，随机，单曲循环
+  const changeSequenceIndex = () => {
+    let newSequence = sequence + 1;
+    if(newSequence > 2) {
+      newSequence = 0;
+    }
+    dispatch(changeSequenceAction(newSequence))
+  }
+  // 上一首，下一首
+  const changeMusic = (tag) => {
+    dispatch(changeCurrentSong(tag))
+  }
+  // 播放
   const playRadio = useCallback(() => {
     isPlaying ? radioRef.current.pause() : radioRef.current.play();
     setIsPlaying(!isPlaying)
@@ -72,9 +93,12 @@ export default memo(function ZCAppPlayBar() {
     <AppPlayerBarWrapper className="sprite_playbar">
       <div className="content wrap-v2">
         <Control isPlaying={isPlaying}>
-          <button className="sprite_playbar prev"></button>
-          <button className="sprite_playbar play" onClick={e => playRadio()}></button>
-          <button className="sprite_playbar next"></button>
+          <button className="sprite_playbar prev"
+                  onClick={e => changeMusic(-1)}></button>
+          <button className="sprite_playbar play" 
+                  onClick={e => playRadio()}></button>
+          <button className="sprite_playbar next"
+                  onClick={e => changeMusic(1)}></button>
         </Control>
         <PlayInfo>
           <div className="image">
@@ -100,15 +124,15 @@ export default memo(function ZCAppPlayBar() {
             </div>
           </div>
         </PlayInfo>
-        <Operator>
+        <Operator sequence={sequence}>
           <div className="left">
             <button className="sprite_playbar btn favor"></button>
             <button className="sprite_playbar btn share"></button>
           </div>
           <div className="right sprite_playbar">
             <button className="sprite_playbar btn volume"></button>
-            <button className="sprite_playbar btn loop"></button>
-            <button className="sprite_playbar btn playlist"></button>
+            <button className="sprite_playbar btn loop" onClick={e => changeSequenceIndex()}></button>
+            <button className="sprite_playbar btn playlist">{playList.length}</button>
           </div>
         </Operator>
       </div>

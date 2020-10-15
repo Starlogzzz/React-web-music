@@ -157,7 +157,12 @@ export const Operator = styled.div`
     }
 
     .playlist {
+      position: relative;
+      top: -8px;
+      left: 0;
+      padding-left: 25px;
       width: 59px;
+      color: #666;
       background-position: -42px -68px;
     }
   }
