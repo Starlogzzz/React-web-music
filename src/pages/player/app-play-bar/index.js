@@ -40,6 +40,12 @@ export default memo(function ZCAppPlayBar() {
   }, [dispatch])
   useEffect(() => {
     radioRef.current.src = getPlaySong(currentSong.id);
+    radioRef.current.play().then(res => {
+      setIsPlaying(true);
+    }).catch(err => {
+      console.log(err)
+      setIsPlaying(false);
+    });
   }, [currentSong])
 
   // 防止取值取到undefined
@@ -70,6 +76,13 @@ export default memo(function ZCAppPlayBar() {
     if(!isChange) {
       setAudioTime(e.target.currentTime * 1000);
       setProgress((audioTime / duration) * 100);
+    }
+  }
+  const handleMusicEnded = () => {
+    if (sequence === 2) {
+ 
+    } else {
+      dispatch(changeCurrentSong(1))
     }
   }
   const progressChange = useCallback((value) => {
@@ -136,7 +149,7 @@ export default memo(function ZCAppPlayBar() {
           </div>
         </Operator>
       </div>
-      <audio ref={radioRef} onTimeUpdate={e => timeUpDate(e)} />
+      <audio ref={radioRef} onTimeUpdate={e => timeUpDate(e)} onEnded={e => handleMusicEnded()}/>
     </AppPlayerBarWrapper>
   )
 })

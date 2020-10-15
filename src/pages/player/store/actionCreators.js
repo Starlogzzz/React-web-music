@@ -33,7 +33,7 @@ export const changeCurrentSong = (tag) => {
     switch(sequence) {
       case 1: // 随机播放
         let randomIndex = getRandomNumber(playList.length);
-        while (currentSongIndex == randomIndex) {
+        while (currentSongIndex === randomIndex) {
           randomIndex = getRandomNumber(playList.length);
         }
         currentSongIndex = randomIndex;
