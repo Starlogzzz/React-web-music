@@ -13,7 +13,6 @@ export function parseLyric(lyricString) {
       const time3 = lyricTime[3].length === 2 ? lyricTime[3]*10:lyricTime[3]*1;
       const totalTime = time1 + time2 + time3;
       
-      
       const word = line.replace(parseExp, "").trim();
       const lineObj = {totalTime, word};
       lyricList.push(lineObj)

@@ -9,9 +9,10 @@ import { getSizeImage, formatDate, getPlaySong } from '@/utils/format-utils';
 import { 
   getSongDetailAction,
   changeSequenceAction,
-  changeCurrentSong
+  changeCurrentSong,
+  changeCurrentLyricIndexAction
 } from "../store/actionCreators"
-import { Slider } from 'antd';
+import { Slider, message } from 'antd';
 
 import {
   AppPlayerBarWrapper,
@@ -27,10 +28,12 @@ export default memo(function ZCAppPlayBar() {
   const [isPlaying, setIsPlaying] = useState(false) // 是否正在播放
 
   // hooks
-  const { currentSong, sequence, playList } = useSelector(state => ({
+  const { currentSong, sequence, playList, lyricList, currentLyricIndex } = useSelector(state => ({
     currentSong: state.getIn(["player", "currentSong"]),
     sequence: state.getIn(["player", "sequence"]),
-    playList: state.getIn(["player", "playList"])
+    playList: state.getIn(["player", "playList"]),
+    lyricList: state.getIn(["player", "lyricList"]),
+    currentLyricIndex: state.getIn(["player", "currentLyricIndex"])
   }), shallowEqual)
 
   const radioRef = useRef();
@@ -52,6 +55,7 @@ export default memo(function ZCAppPlayBar() {
   const picUrl = (currentSong.al && currentSong.al.picUrl) || ""
   const singerName = (currentSong.ar && currentSong.ar[0].name) || ""
   const duration = (currentSong && currentSong.dt) || ""
+  // 时间格式化处理
   const showDuration = formatDate(duration, "mm:ss")
   const showCurrentTime = formatDate(audioTime, "mm:ss")
 
@@ -73,10 +77,32 @@ export default memo(function ZCAppPlayBar() {
     setIsPlaying(!isPlaying)
   }, [isPlaying])
   const timeUpDate = (e) => {
+    const currentTime = e.target.currentTime 
     if(!isChange) {
-      setAudioTime(e.target.currentTime * 1000);
+      setAudioTime(currentTime * 1000);
       setProgress((audioTime / duration) * 100);
     }
+    // 获取歌词
+    let currentLyricLine = 0;
+    for(let i = 0; i< lyricList.length; i++) {
+      let lyricItem = lyricList[i];
+      if (currentTime * 1000 < lyricItem.totalTime) {
+        currentLyricLine = i
+        break;
+      }
+    }
+    if (currentLyricIndex !== currentLyricLine - 1){
+      dispatch(changeCurrentLyricIndexAction(currentLyricLine - 1))
+      console.log(lyricList[currentLyricLine - 1]);
+      const nowLyric = lyricList[currentLyricLine - 1] && lyricList[currentLyricLine - 1].word
+      message.open({
+        key: "lyric",
+        content: nowLyric,
+        duration: 0,
+        className: "show-lyric"
+      });
+    }
+    
   }
   const handleMusicEnded = () => {
     if (sequence === 2) {
