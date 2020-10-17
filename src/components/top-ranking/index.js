@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
+import { useDispatch } from 'react-redux';
 
+import { getSizeImage } from '@/utils/format-utils';
 import { getSongDetailAction } from "@/pages/player/store";
 
 import { TopRankingWrapper } from "./style"
-import { getSizeImage } from '@/utils/format-utils';
-import { useDispatch } from 'react-redux';
 
 export default memo(function ZCTopRanking(props) {
   const dispatch = useDispatch();

@@ -20,7 +20,7 @@ const changeHotRecommendAction = res => ({
 
 const changeNewAlbumAction = res => ({
   type: actionTypes.CHANGE_NEW_ALBUMS,
-  newAlbums: res.monthData
+  newAlbums: res.albums
 })
 
 // 不同排行榜的action
@@ -64,6 +64,7 @@ export const getHotRecommendAction = (limit) => {
 export const getNewAlbumAction = (limit) => {
   return dispatch => {
     getNewAlbums(limit).then(res => {
+      console.log(res.monthData)
       dispatch(changeNewAlbumAction(res))
     })
   }

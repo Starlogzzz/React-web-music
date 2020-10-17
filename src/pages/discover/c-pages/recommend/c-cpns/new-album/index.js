@@ -10,6 +10,9 @@ import ZCAlbumCover from "@/components/album-cover"
 import { NewAlbumWrapper } from './style';
 import ZCThemeHeaderRCM from '@/components/theme-header-rcm';
 
+// test
+import { getNewAlbums } from "@/services/recommend";
+
 export default memo(function ZCNewAlbum() {
 
   const dispatch = useDispatch();
@@ -19,6 +22,12 @@ export default memo(function ZCNewAlbum() {
   }), shallowEqual);
 
   useEffect(() => {
+    // test
+    getNewAlbums(10).then(res => {
+      console.log(res)
+    })
+    // test
+
     dispatch(getNewAlbumAction(10))
   }, [dispatch]);
 

@@ -15,7 +15,7 @@ export default memo(function App() {
     <Provider store={store}>
       <HashRouter>
         <ZCAppHeader/>
-          <Suspense fallback={<div>loading...</div>}>
+          <Suspense fallback={<h1>loading...</h1>}>
             {renderRoutes(routes)}
           </Suspense>
         <ZCAppFooter/>
