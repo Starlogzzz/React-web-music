@@ -4,7 +4,8 @@ import { BASEURL, TIMEOUT } from "./config";
 
 const instance = axios.create({
   baseURL: BASEURL,
-  timeout: TIMEOUT
+  timeout: TIMEOUT,
+  withCredentials: true
 });
 
 instance.interceptors.request.use(config => {
